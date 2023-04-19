@@ -74,7 +74,7 @@ namespace WizardTest
 
                 if (i < CurrentStep -1)
                 {
-                    float width = radiusBig + stepSpacing * 1.5f - margin;
+                    float width = radiusBig + stepSpacing * 1.5f;
                     float height = 4;
                     float lineX = x - stepSpacing / 2;
                     float lineY = y + radiusBig / 2 - height / 2;
