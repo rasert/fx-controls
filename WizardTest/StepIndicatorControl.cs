@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,63 +20,62 @@ namespace WizardTest
 
         private void StepIndicatorControl_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
             int stepCount = 5;
             int currentStep = 3;
-            float stepSize = 30;
-            float innerStepSize = stepSize * 0.75f;
-            float innerOffset = innerStepSize * 0.17f;
+            float radiusBig = 30;
+            float radiusSmall = radiusBig * 0.75f;
+            float innerOffset = radiusSmall * 0.17f;
             float stepSpacing = 10;
             float x = 0;
             float y = 0;
 
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            var lightGrayBrush = new LinearGradientBrush(ClientRectangle, Color.FromArgb(224, 227, 214), Color.LightGray, LinearGradientMode.Vertical);
+            var darkGrayBrush = new LinearGradientBrush(ClientRectangle, Color.DarkGray, Color.Gray, LinearGradientMode.Vertical);
+            var lightGreenBrush = new LinearGradientBrush(ClientRectangle, Color.FromArgb(206, 217, 79), Color.FromArgb(191, 201, 82), LinearGradientMode.Vertical);
+            var darkGreenBrush = new LinearGradientBrush(ClientRectangle, Color.YellowGreen, Color.ForestGreen, LinearGradientMode.Vertical);
 
             // Draw the gray lines connecting the steps
-            Pen grayPen = new Pen(Color.LightGray, 6);
             for (int i = 0; i < stepCount - 1; i++)
             {
-                float lineX1 = x + stepSize;
-                float lineX2 = x + stepSize + stepSpacing;
-                float lineY = y + stepSize / 2;
-                e.Graphics.DrawLine(grayPen, lineX1, lineY, lineX2, lineY);
+                float lineX1 = x + radiusBig;
+                float lineY = y + radiusBig / 2.3f;
+                float width = y + radiusBig + stepSpacing;
+                float height = 6;
+                e.Graphics.FillRectangle(lightGrayBrush, lineX1, lineY, width, height);
 
-                x += stepSize + stepSpacing;
+                x += radiusBig + stepSpacing;
             }
 
             // Reset the drawing position for the steps and draw them
             x = 0;
             for (int i = 0; i < stepCount; i++)
             {
-                // Determine the color for the step based on its index
-                Brush brush = Brushes.LightGray;
-                Brush innerBrush = Brushes.Transparent;
-                Pen greenPen = new Pen(Color.Green, 2);
-
                 // Draw the outer circle
-                e.Graphics.FillEllipse(brush, x, y, stepSize, stepSize);
+                e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
-                // Draw the green line connecting the completed steps
                 if (i < currentStep)
                 {
-                    innerBrush = Brushes.Green;
-
-                    float lineX1 = x - stepSpacing / 2;
-                    float lineX2 = x + stepSize + stepSpacing / 2;
-                    float lineY = y + stepSize / 2;
+                    float lineX = x - stepSpacing / 2;
+                    float lineY = y + radiusBig / 2;
+                    float width = radiusBig + stepSpacing;
+                    float height = 2;
 
                     if (i == 0)
-                        lineX1 = x + innerOffset;
+                        lineX = x + innerOffset;
 
-                    e.Graphics.DrawLine(greenPen, lineX1, lineY, lineX2, lineY);
+                    // Draw the green line connecting the completed steps
+                    e.Graphics.FillRectangle(lightGreenBrush, lineX, lineY, width, height);
+
+                    // Draw the inner circle for completed steps
+                    float innerX = x + innerOffset;
+                    float innerY = y + innerOffset;
+                    e.Graphics.FillEllipse(lightGreenBrush, innerX, innerY, radiusSmall, radiusSmall);
                 }
 
-                // Draw the inner circle for completed steps
-                float innerX = x + innerOffset;
-                float innerY = y + innerOffset;
-                e.Graphics.FillEllipse(innerBrush, innerX, innerY, innerStepSize, innerStepSize);
-
                 // Move the drawing position to the right for the next step
-                x += stepSize + stepSpacing;
+                x += radiusBig + stepSpacing;
             }
         }
     }
