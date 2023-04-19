@@ -1,22 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WizardTest
 {
     public partial class StepIndicatorControl : UserControl
     {
+        private int _stepCount = 5;
+        private int _currentStep = 1;
+
         [Description("Quantity of Steps"), Category("Step Config")]
-        public int StepCount { get; set; } = 5;
+        public int StepCount
+        { 
+            get => _stepCount;
+            set
+            {
+                _stepCount = value;
+                Parent?.Refresh();
+            }
+        }
         [Description("Current Step"), Category("Step Config")]
-        public int CurrentStep { get; set; } = 3;
+        public int CurrentStep
+        { 
+            get => _currentStep;
+            set
+            {
+                _currentStep = value;
+                Parent?.Refresh();
+            }
+        }
 
         public StepIndicatorControl()
         {
@@ -28,10 +39,10 @@ namespace WizardTest
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             float margin = 3;
-            float radiusBig = this.Height * 0.8f;
+            float radiusBig = Height * 0.8f;
             float radiusSmall = radiusBig * 0.75f;
             float innerOffset = radiusSmall * 0.17f;
-            float stepSpacing = (this.Width - (StepCount * radiusBig)) / (StepCount - 1) - margin;
+            float stepSpacing = (Width - (StepCount * radiusBig)) / (StepCount - 1) - margin;
             float x = margin;
             float y = margin;
 
@@ -61,7 +72,7 @@ namespace WizardTest
                 e.Graphics.FillEllipse(darkGrayBrush, x, y -1, radiusBig, radiusBig); // drop shadow
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
-                if (i < CurrentStep)
+                if (i < CurrentStep -1)
                 {
                     float width = radiusBig + stepSpacing * 1.5f - margin;
                     float height = 4;

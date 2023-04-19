@@ -56,11 +56,11 @@
             // 
             // stepIndicatorControl1
             // 
-            stepIndicatorControl1.CurrentStep = 5;
+            stepIndicatorControl1.CurrentStep = 1;
             stepIndicatorControl1.Location = new Point(227, 3);
             stepIndicatorControl1.Name = "stepIndicatorControl1";
             stepIndicatorControl1.Size = new Size(313, 42);
-            stepIndicatorControl1.StepCount = 5;
+            stepIndicatorControl1.StepCount = 6;
             stepIndicatorControl1.TabIndex = 3;
             // 
             // button2
