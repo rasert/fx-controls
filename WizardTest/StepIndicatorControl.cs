@@ -21,19 +21,21 @@ namespace WizardTest
         {
             int stepCount = 5;
             int currentStep = 3;
-            int stepSize = 30;
-            int innerStepSize = stepSize / 2;
-            int stepSpacing = 10;
-            int x = 0;
-            int y = 0;
+            float stepSize = 30;
+            float innerStepSize = stepSize / 2;
+            float stepSpacing = 10;
+            float x = 0;
+            float y = 0;
+
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             // Draw the gray lines connecting the steps
             Pen grayPen = new Pen(Color.LightGray, 6);
             for (int i = 0; i < stepCount - 1; i++)
             {
-                int lineX1 = x + stepSize;
-                int lineX2 = x + stepSize + stepSpacing;
-                int lineY = y + stepSize / 2;
+                float lineX1 = x + stepSize;
+                float lineX2 = x + stepSize + stepSpacing;
+                float lineY = y + stepSize / 2;
                 e.Graphics.DrawLine(grayPen, lineX1, lineY, lineX2, lineY);
 
                 x += stepSize + stepSpacing;
@@ -56,9 +58,9 @@ namespace WizardTest
                 {
                     innerBrush = Brushes.Green;
 
-                    int lineX1 = x - stepSpacing / 2;
-                    int lineX2 = x + stepSize + stepSpacing / 2;
-                    int lineY = y + stepSize / 2;
+                    float lineX1 = x - stepSpacing / 2;
+                    float lineX2 = x + stepSize + stepSpacing / 2;
+                    float lineY = y + stepSize / 2;
 
                     if (i == 0)
                         lineX1 = x + innerStepSize / 2;
@@ -67,8 +69,8 @@ namespace WizardTest
                 }
 
                 // Draw the inner circle for completed steps
-                int innerX = x + innerStepSize / 2;
-                int innerY = y + innerStepSize / 2;
+                float innerX = x + innerStepSize / 2;
+                float innerY = y + innerStepSize / 2;
                 e.Graphics.FillEllipse(innerBrush, innerX, innerY, innerStepSize, innerStepSize);
 
                 // Move the drawing position to the right for the next step
