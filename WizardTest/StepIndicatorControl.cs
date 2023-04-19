@@ -39,7 +39,7 @@ namespace WizardTest
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             float margin = 3;
-            float radiusBig = Height * 0.8f;
+            float radiusBig = Height * 0.5f;
             float radiusSmall = radiusBig * 0.75f;
             float innerOffset = radiusSmall * 0.17f;
             float stepSpacing = (Width - (StepCount * radiusBig)) / (StepCount - 1) - margin;
@@ -86,7 +86,10 @@ namespace WizardTest
                     float lineY = y + radiusBig / 2 - height / 2;
 
                     if (i == 0)
+                    {
                         lineX = x + innerOffset;
+                        width -= stepSpacing * 0.5f;
+                    }
                     if (i == StepCount - 1)
                         width = width / 2 - (radiusBig - radiusSmall);
 
@@ -99,6 +102,16 @@ namespace WizardTest
                     e.Graphics.FillEllipse(darkGreenBrush, innerX, innerY -1, radiusSmall, radiusSmall);
                     e.Graphics.FillEllipse(lightGreenBrush, innerX, innerY, radiusSmall, radiusSmall);
                 }
+
+                // Draw the label text under the step circle
+                string labelText = $"Step {i + 1}";
+                Font labelFont = new Font("Arial", 10);
+                Brush labelBrush = Brushes.Black;
+                SizeF labelSize = e.Graphics.MeasureString(labelText, labelFont);
+                PointF labelLocation = new PointF(x + radiusBig / 2 + margin, y + radiusBig + 5 + margin);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                e.Graphics.DrawString(labelText, labelFont, labelBrush, labelLocation, stringFormat);
 
                 // Move the drawing position to the right for the next step
                 x += radiusBig + stepSpacing;

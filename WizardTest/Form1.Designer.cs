@@ -57,9 +57,9 @@
             // stepIndicatorControl1
             // 
             stepIndicatorControl1.CurrentStep = 1;
-            stepIndicatorControl1.Location = new Point(227, 3);
+            stepIndicatorControl1.Location = new Point(107, 3);
             stepIndicatorControl1.Name = "stepIndicatorControl1";
-            stepIndicatorControl1.Size = new Size(313, 42);
+            stepIndicatorControl1.Size = new Size(585, 62);
             stepIndicatorControl1.StepCount = 6;
             stepIndicatorControl1.TabIndex = 3;
             // 
@@ -92,9 +92,9 @@
             flowLayoutPanel1.Controls.Add(wizardStepControl4);
             flowLayoutPanel1.Controls.Add(wizardStepControl5);
             flowLayoutPanel1.Controls.Add(wizardStepControl6);
-            flowLayoutPanel1.Location = new Point(3, 51);
+            flowLayoutPanel1.Location = new Point(3, 86);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(770, 343);
+            flowLayoutPanel1.Size = new Size(770, 308);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
             // 
