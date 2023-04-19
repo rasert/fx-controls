@@ -57,10 +57,10 @@
             // stepIndicatorControl1
             // 
             stepIndicatorControl1.CurrentStep = 1;
-            stepIndicatorControl1.Location = new Point(107, 3);
+            stepIndicatorControl1.Location = new Point(25, 3);
             stepIndicatorControl1.Name = "stepIndicatorControl1";
-            stepIndicatorControl1.Size = new Size(585, 62);
-            stepIndicatorControl1.StepCount = 6;
+            stepIndicatorControl1.Size = new Size(717, 62);
+            stepIndicatorControl1.Steps = (new string[] { "Instalação", "Execução", "Saúde", "Sincronismo", "Teste Básico", "Conclusão" });
             stepIndicatorControl1.TabIndex = 3;
             // 
             // button2
