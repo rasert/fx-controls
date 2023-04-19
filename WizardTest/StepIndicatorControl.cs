@@ -22,7 +22,8 @@ namespace WizardTest
             int stepCount = 5;
             int currentStep = 3;
             float stepSize = 30;
-            float innerStepSize = stepSize / 2;
+            float innerStepSize = stepSize * 0.75f;
+            float innerOffset = innerStepSize * 0.17f;
             float stepSpacing = 10;
             float x = 0;
             float y = 0;
@@ -63,14 +64,14 @@ namespace WizardTest
                     float lineY = y + stepSize / 2;
 
                     if (i == 0)
-                        lineX1 = x + innerStepSize / 2;
+                        lineX1 = x + innerOffset;
 
                     e.Graphics.DrawLine(greenPen, lineX1, lineY, lineX2, lineY);
                 }
 
                 // Draw the inner circle for completed steps
-                float innerX = x + innerStepSize / 2;
-                float innerY = y + innerStepSize / 2;
+                float innerX = x + innerOffset;
+                float innerY = y + innerOffset;
                 e.Graphics.FillEllipse(innerBrush, innerX, innerY, innerStepSize, innerStepSize);
 
                 // Move the drawing position to the right for the next step
