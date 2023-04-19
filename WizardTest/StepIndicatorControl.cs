@@ -39,10 +39,11 @@ namespace WizardTest
             // Draw the gray lines connecting the steps
             for (int i = 0; i < stepCount - 1; i++)
             {
-                float lineX1 = x + radiusBig;
-                float lineY = y + radiusBig / 2.3f;
                 float width = y + radiusBig + stepSpacing;
-                float height = 6;
+                float height = 10;
+                float lineX1 = x + radiusBig;
+                float lineY = y + radiusBig / 2 - height / 2;
+                e.Graphics.FillRectangle(darkGrayBrush, lineX1, lineY - 1, width, height); // drop shadow
                 e.Graphics.FillRectangle(lightGrayBrush, lineX1, lineY, width, height);
 
                 x += radiusBig + stepSpacing;
@@ -53,14 +54,15 @@ namespace WizardTest
             for (int i = 0; i < stepCount; i++)
             {
                 // Draw the outer circle
+                e.Graphics.FillEllipse(darkGrayBrush, x, y -1, radiusBig, radiusBig); // drop shadow
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
                 if (i < currentStep)
                 {
-                    float lineX = x - stepSpacing / 2;
-                    float lineY = y + radiusBig / 2;
                     float width = radiusBig + stepSpacing;
-                    float height = 2;
+                    float height = 4;
+                    float lineX = x - stepSpacing / 2;
+                    float lineY = y + radiusBig / 2 - height / 2;
 
                     if (i == 0)
                         lineX = x + innerOffset;
@@ -71,6 +73,7 @@ namespace WizardTest
                     // Draw the inner circle for completed steps
                     float innerX = x + innerOffset;
                     float innerY = y + innerOffset;
+                    e.Graphics.FillEllipse(darkGreenBrush, innerX, innerY -1, radiusSmall, radiusSmall);
                     e.Graphics.FillEllipse(lightGreenBrush, innerX, innerY, radiusSmall, radiusSmall);
                 }
 
