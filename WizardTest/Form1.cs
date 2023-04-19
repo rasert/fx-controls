@@ -21,16 +21,30 @@ namespace WizardTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _steps[_currentStep].Visible = false;
+            if (_currentStep == _steps.Count)
+                return;
+
+            if (_currentStep >= 0)
+                _steps[_currentStep].Visible = false;
             _currentStep++;
-            _steps[_currentStep].Visible = true;
+            stepIndicatorControl1.CurrentStep = _currentStep + 1;
+
+            if (_currentStep < _steps.Count)
+                _steps[_currentStep].Visible = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _steps[_currentStep].Visible = false;
+            if (_currentStep == 0)
+                return;
+
+            if (_currentStep < _steps.Count)
+                _steps[_currentStep].Visible = false;
             _currentStep--;
-            _steps[_currentStep].Visible = true;
+            stepIndicatorControl1.CurrentStep = _currentStep + 1;
+
+            if (_currentStep >= 0)
+                _steps[_currentStep].Visible = true;
         }
     }
 }

@@ -72,6 +72,12 @@ namespace WizardTest
                 e.Graphics.FillEllipse(darkGrayBrush, x, y -1, radiusBig, radiusBig); // drop shadow
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
+                if (i == CurrentStep -1)
+                {
+                    Pen greenPen = new Pen(Color.FromArgb(206, 217, 79), 2);
+                    e.Graphics.DrawEllipse(greenPen, x, y, radiusBig, radiusBig);
+                }
+
                 if (i < CurrentStep -1)
                 {
                     float width = radiusBig + stepSpacing * 1.5f;
