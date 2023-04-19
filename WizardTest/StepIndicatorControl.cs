@@ -13,6 +13,11 @@ namespace WizardTest
 {
     public partial class StepIndicatorControl : UserControl
     {
+        [Description("Quantity of Steps"), Category("Step Config")]
+        public int StepCount { get; set; } = 5;
+        [Description("Current Step"), Category("Step Config")]
+        public int CurrentStep { get; set; } = 3;
+
         public StepIndicatorControl()
         {
             InitializeComponent();
@@ -22,12 +27,10 @@ namespace WizardTest
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            int stepCount = 5;
-            int currentStep = 3;
-            float radiusBig = 30;
+            float radiusBig = 30; // TODO: should be a proportion of the control Height
             float radiusSmall = radiusBig * 0.75f;
             float innerOffset = radiusSmall * 0.17f;
-            float stepSpacing = 10;
+            float stepSpacing = 10; // TODO: should be a proportion of the control Width
             float x = 0;
             float y = 0;
 
@@ -37,7 +40,7 @@ namespace WizardTest
             var darkGreenBrush = new LinearGradientBrush(ClientRectangle, Color.YellowGreen, Color.ForestGreen, LinearGradientMode.Vertical);
 
             // Draw the gray lines connecting the steps
-            for (int i = 0; i < stepCount - 1; i++)
+            for (int i = 0; i < StepCount - 1; i++)
             {
                 float width = y + radiusBig + stepSpacing;
                 float height = 10;
@@ -51,15 +54,15 @@ namespace WizardTest
 
             // Reset the drawing position for the steps and draw them
             x = 0;
-            for (int i = 0; i < stepCount; i++)
+            for (int i = 0; i < StepCount; i++)
             {
                 // Draw the outer circle
                 e.Graphics.FillEllipse(darkGrayBrush, x, y -1, radiusBig, radiusBig); // drop shadow
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
-                if (i < currentStep)
+                if (i < CurrentStep)
                 {
-                    float width = radiusBig + stepSpacing;
+                    float width = radiusBig + stepSpacing * 1.5f;
                     float height = 4;
                     float lineX = x - stepSpacing / 2;
                     float lineY = y + radiusBig / 2 - height / 2;
