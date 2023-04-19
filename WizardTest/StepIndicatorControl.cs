@@ -27,12 +27,13 @@ namespace WizardTest
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            float radiusBig = 30; // TODO: should be a proportion of the control Height
+            float margin = 3;
+            float radiusBig = this.Height * 0.8f;
             float radiusSmall = radiusBig * 0.75f;
             float innerOffset = radiusSmall * 0.17f;
-            float stepSpacing = 10; // TODO: should be a proportion of the control Width
-            float x = 0;
-            float y = 0;
+            float stepSpacing = (this.Width - (StepCount * radiusBig)) / (StepCount - 1) - margin;
+            float x = margin;
+            float y = margin;
 
             var lightGrayBrush = new LinearGradientBrush(ClientRectangle, Color.FromArgb(224, 227, 214), Color.LightGray, LinearGradientMode.Vertical);
             var darkGrayBrush = new LinearGradientBrush(ClientRectangle, Color.DarkGray, Color.Gray, LinearGradientMode.Vertical);
@@ -42,7 +43,7 @@ namespace WizardTest
             // Draw the gray lines connecting the steps
             for (int i = 0; i < StepCount - 1; i++)
             {
-                float width = y + radiusBig + stepSpacing;
+                float width = y + radiusBig + stepSpacing - margin;
                 float height = 10;
                 float lineX1 = x + radiusBig;
                 float lineY = y + radiusBig / 2 - height / 2;
@@ -53,7 +54,7 @@ namespace WizardTest
             }
 
             // Reset the drawing position for the steps and draw them
-            x = 0;
+            x = margin;
             for (int i = 0; i < StepCount; i++)
             {
                 // Draw the outer circle
@@ -62,13 +63,15 @@ namespace WizardTest
 
                 if (i < CurrentStep)
                 {
-                    float width = radiusBig + stepSpacing * 1.5f;
+                    float width = radiusBig + stepSpacing * 1.5f - margin;
                     float height = 4;
                     float lineX = x - stepSpacing / 2;
                     float lineY = y + radiusBig / 2 - height / 2;
 
                     if (i == 0)
                         lineX = x + innerOffset;
+                    if (i == StepCount - 1)
+                        width = width / 2 - (radiusBig - radiusSmall);
 
                     // Draw the green line connecting the completed steps
                     e.Graphics.FillRectangle(lightGreenBrush, lineX, lineY, width, height);
