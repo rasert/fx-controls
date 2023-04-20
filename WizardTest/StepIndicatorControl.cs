@@ -24,10 +24,10 @@ namespace WizardTest
 
         public StepIndicatorControl()
         {
-            InitializeComponent();
-
             _steps = new string[0];
             _stepStatus = new bool?[0];
+
+            InitializeComponent();
         }
 
         public void NextStep(bool? currentStepStatus = null)
@@ -81,42 +81,11 @@ namespace WizardTest
                 e.Graphics.FillEllipse(darkGrayBrush, x, y -1, radiusBig, radiusBig); // drop shadow
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
+                // Draw current step outline
                 if (i == _currentStep -1)
                 {
                     Pen greenPen = new Pen(Color.LawnGreen, 2);
                     e.Graphics.DrawEllipse(greenPen, x, y, radiusBig, radiusBig);
-                }
-
-                if (i < _currentStep -1 && _stepStatus[i].HasValue)
-                {
-                    var lightBrush = _stepStatus[i].Value
-                        ? new LinearGradientBrush(ClientRectangle, Color.LawnGreen, Color.Gold, LinearGradientMode.Vertical)
-                        : new LinearGradientBrush(ClientRectangle, Color.MediumVioletRed, Color.OrangeRed, LinearGradientMode.Vertical);
-                    var darkBrush = _stepStatus[i].Value
-                        ? new LinearGradientBrush(ClientRectangle, Color.YellowGreen, Color.ForestGreen, LinearGradientMode.Vertical)
-                        : new LinearGradientBrush(ClientRectangle, Color.DarkRed, Color.Red, LinearGradientMode.Vertical);
-
-                    float width = radiusBig + stepSpacing * 1.5f;
-                    float height = 4;
-                    float lineX = x - stepSpacing / 2;
-                    float lineY = y + radiusBig / 2 - height / 2;
-
-                    if (i == 0)
-                    {
-                        lineX = x + innerOffset;
-                        width -= stepSpacing * 0.5f;
-                    }
-                    if (i == _steps.Length - 1)
-                        width = width / 2 - (radiusBig - radiusSmall);
-
-                    // Draw the green line connecting the completed steps
-                    e.Graphics.FillRectangle(lightBrush, lineX, lineY, width, height);
-
-                    // Draw the inner circle for completed steps
-                    float innerX = x + innerOffset;
-                    float innerY = y + innerOffset;
-                    e.Graphics.FillEllipse(darkBrush, innerX, innerY -1, radiusSmall, radiusSmall);
-                    e.Graphics.FillEllipse(lightBrush, innerX, innerY, radiusSmall, radiusSmall);
                 }
 
                 // Draw the label text under the step circle
@@ -142,6 +111,56 @@ namespace WizardTest
                 // Move the drawing position to the right for the next step
                 x += radiusBig + stepSpacing;
             }
+
+            x = margin;
+            for (int i = 0; i < _steps.Length; i++)
+            {
+                if (!_stepStatus[i].HasValue)
+                    continue;
+
+                var lightBrush = _stepStatus[i].Value
+                        ? new LinearGradientBrush(ClientRectangle, Color.LawnGreen, Color.Gold, LinearGradientMode.Vertical)
+                        : new LinearGradientBrush(ClientRectangle, Color.MediumVioletRed, Color.OrangeRed, LinearGradientMode.Vertical);
+                var darkBrush = _stepStatus[i].Value
+                    ? new LinearGradientBrush(ClientRectangle, Color.YellowGreen, Color.ForestGreen, LinearGradientMode.Vertical)
+                    : new LinearGradientBrush(ClientRectangle, Color.DarkRed, Color.Red, LinearGradientMode.Vertical);
+
+                float stepCenterX = x + innerOffset;
+                float stepCenterY = y + innerOffset;
+                float height = 4;
+                float lineY = y + radiusBig / 2 - height / 2;
+                float lineX = stepCenterX + 1;
+                float width = radiusBig + stepSpacing;
+
+                if (i == _currentStep - 2)
+                    width -= innerOffset;
+
+                // Draw the red or green line connecting the completed steps
+                var brushRectangle = Rectangle.FromLTRB((int)lineX, (int)lineY, (int)(lineX + width), (int)(lineY + height));
+                if (i < _steps.Length - 1)
+                    e.Graphics.FillRectangle(GetInnerLineBrush(i, brushRectangle), lineX, lineY, width, height);
+
+                // Draw the inner circle for completed steps
+                e.Graphics.FillEllipse(darkBrush, stepCenterX, stepCenterY - 1, radiusSmall, radiusSmall);
+                e.Graphics.FillEllipse(lightBrush, stepCenterX, stepCenterY, radiusSmall, radiusSmall);
+
+                // Move the drawing position to the right for the next step
+                x += radiusBig + stepSpacing;
+            }
+        }
+
+        private LinearGradientBrush GetInnerLineBrush(int stepIndex, Rectangle brushRectangle)
+        {
+            int leftIndex = stepIndex;
+            int rightIndex = stepIndex < _stepStatus.Length -1 ? stepIndex + 1 : stepIndex;
+
+            Color leftColor = _stepStatus[leftIndex].Value ? Color.LawnGreen : Color.Crimson;
+
+            Color rightColor = Color.LawnGreen;
+            if (_stepStatus[rightIndex].HasValue)
+                rightColor = _stepStatus[rightIndex].Value ? Color.LawnGreen : Color.Crimson;
+
+            return new LinearGradientBrush(brushRectangle, leftColor, rightColor, LinearGradientMode.Horizontal);
         }
     }
 }

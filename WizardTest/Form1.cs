@@ -27,7 +27,7 @@ namespace WizardTest
             if (_currentStep >= 0)
                 _steps[_currentStep].Visible = false;
             _currentStep++;
-            stepIndicatorControl1.NextStep(_currentStep % 2 == 0);
+            stepIndicatorControl1.NextStep(DateTime.Now.Millisecond % 2 == 0);
 
             if (_currentStep < _steps.Count)
                 _steps[_currentStep].Visible = true;
