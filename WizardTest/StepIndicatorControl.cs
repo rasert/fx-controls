@@ -83,14 +83,14 @@ namespace WizardTest
 
                 if (i == _currentStep -1)
                 {
-                    Pen greenPen = new Pen(Color.FromArgb(206, 217, 79), 2);
+                    Pen greenPen = new Pen(Color.LawnGreen, 2);
                     e.Graphics.DrawEllipse(greenPen, x, y, radiusBig, radiusBig);
                 }
 
                 if (i < _currentStep -1 && _stepStatus[i].HasValue)
                 {
                     var lightBrush = _stepStatus[i].Value
-                        ? new LinearGradientBrush(ClientRectangle, Color.FromArgb(206, 217, 79), Color.FromArgb(191, 201, 82), LinearGradientMode.Vertical)
+                        ? new LinearGradientBrush(ClientRectangle, Color.LawnGreen, Color.Gold, LinearGradientMode.Vertical)
                         : new LinearGradientBrush(ClientRectangle, Color.MediumVioletRed, Color.OrangeRed, LinearGradientMode.Vertical);
                     var darkBrush = _stepStatus[i].Value
                         ? new LinearGradientBrush(ClientRectangle, Color.YellowGreen, Color.ForestGreen, LinearGradientMode.Vertical)
