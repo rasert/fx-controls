@@ -5,9 +5,30 @@ namespace WizardTest
 {
     public partial class StepIndicatorControl : UserControl
     {
+        private System.Windows.Forms.Timer _timer;
         private int _currentStep = 1;
         private string[] _steps;
         private bool?[] _stepStatus;
+
+        private float _widthPercent = 0.1f;
+
+        public StepIndicatorControl()
+        {
+            _steps = new string[0];
+            _stepStatus = new bool?[0];
+
+            InitializeComponent();
+
+            _timer = new System.Windows.Forms.Timer
+            {
+                Interval = 50,
+                Enabled = false
+            };
+            _timer.Tick += Timer_Tick;
+
+            DoubleBuffered = true;
+            ResizeRedraw = true;
+        }
 
         [Description("Steps"), Category("Step Config")]
         public string[] Steps
@@ -18,16 +39,21 @@ namespace WizardTest
                 _steps = value;
                 _stepStatus = new bool?[_steps.Length];
                 Array.Fill(_stepStatus, value: null);
-                Parent?.Refresh();
+                Invalidate();
             }
         }
 
-        public StepIndicatorControl()
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            _steps = new string[0];
-            _stepStatus = new bool?[0];
-
-            InitializeComponent();
+            Invalidate();
+            if (_widthPercent < 1)
+            {
+                _widthPercent += 0.1f;
+            }
+            else
+            {
+                _timer.Enabled = false;
+            }
         }
 
         public void NextStep(bool? currentStepStatus = null)
@@ -36,13 +62,14 @@ namespace WizardTest
                 _stepStatus[_currentStep - 1] = currentStepStatus;
 
             _currentStep++;
-            Parent?.Refresh();
+            _widthPercent = 0.1f;
+            Invalidate();
         }
 
         public void PreviousStep()
         {
             _currentStep--;
-            Parent?.Refresh();
+            Invalidate();
         }
 
         private void StepIndicatorControl_Paint(object sender, PaintEventArgs e)
@@ -133,7 +160,11 @@ namespace WizardTest
                 float width = radiusBig + stepSpacing;
 
                 if (i == _currentStep - 2)
+                {
                     width -= innerOffset;
+                    width *= _widthPercent;
+                    _timer.Enabled = true;
+                }
 
                 // Draw the red or green line connecting the completed steps
                 var brushRectangle = Rectangle.FromLTRB((int)lineX, (int)lineY, (int)(lineX + width), (int)(lineY + height));
