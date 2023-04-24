@@ -109,7 +109,7 @@ namespace WizardTest
                 e.Graphics.FillEllipse(lightGrayBrush, x, y, radiusBig, radiusBig);
 
                 // Draw current step outline
-                if (i == _currentStep -1)
+                if (i == _currentStep - 1 && !_timer.Enabled)
                 {
                     Pen greenPen = new Pen(Color.LawnGreen, 2);
                     e.Graphics.DrawEllipse(greenPen, x, y, radiusBig, radiusBig);
