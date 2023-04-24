@@ -21,7 +21,7 @@ namespace WizardTest
 
             _timer = new System.Windows.Forms.Timer
             {
-                Interval = 50,
+                Interval = 25,
                 Enabled = false
             };
             _timer.Tick += Timer_Tick;
