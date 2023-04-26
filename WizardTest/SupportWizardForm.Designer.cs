@@ -1,6 +1,6 @@
 ﻿namespace WizardTest
 {
-    partial class Form1
+    partial class SupportWizardForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,65 +29,72 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
             stepIndicatorControl1 = new StepIndicatorControl();
+            metroButton1 = new MetroFramework.Controls.MetroButton();
+            metroButton2 = new MetroFramework.Controls.MetroButton();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Location = new Point(12, 95);
+            panel1.Location = new Point(12, 146);
             panel1.Name = "panel1";
-            panel1.Size = new Size(776, 314);
+            panel1.Size = new Size(776, 263);
             panel1.TabIndex = 0;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(632, 415);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 4;
-            button2.Text = "Anterior";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(713, 415);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 3;
-            button1.Text = "Próximo";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // stepIndicatorControl1
             // 
-            stepIndicatorControl1.Location = new Point(12, 12);
+            stepIndicatorControl1.Location = new Point(12, 63);
             stepIndicatorControl1.Name = "stepIndicatorControl1";
             stepIndicatorControl1.Size = new Size(776, 77);
             stepIndicatorControl1.Steps = (new string[] { "Instalação", "Execução", "Saúde", "Sincronismo", "Teste Básico", "Conclusão" });
             stepIndicatorControl1.TabIndex = 5;
             // 
-            // Form1
+            // metroButton1
+            // 
+            metroButton1.Highlight = false;
+            metroButton1.Location = new Point(713, 415);
+            metroButton1.Name = "metroButton1";
+            metroButton1.Size = new Size(75, 23);
+            metroButton1.Style = MetroFramework.MetroColorStyle.Blue;
+            metroButton1.StyleManager = null;
+            metroButton1.TabIndex = 6;
+            metroButton1.Text = "Próximo";
+            metroButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+            metroButton1.Click += button1_Click;
+            // 
+            // metroButton2
+            // 
+            metroButton2.Highlight = false;
+            metroButton2.Location = new Point(632, 415);
+            metroButton2.Name = "metroButton2";
+            metroButton2.Size = new Size(75, 23);
+            metroButton2.Style = MetroFramework.MetroColorStyle.Blue;
+            metroButton2.StyleManager = null;
+            metroButton2.TabIndex = 7;
+            metroButton2.Text = "Anterior";
+            metroButton2.Theme = MetroFramework.MetroThemeStyle.Light;
+            metroButton2.Click += button2_Click;
+            // 
+            // SupportWizardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(metroButton2);
+            Controls.Add(metroButton1);
             Controls.Add(stepIndicatorControl1);
-            Controls.Add(button2);
-            Controls.Add(button1);
             Controls.Add(panel1);
-            Name = "Form1";
-            Text = "Form1";
+            Location = new Point(0, 0);
+            Name = "SupportWizardForm";
+            Text = "Support Wizard";
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private Button button2;
-        private Button button1;
         private StepIndicatorControl stepIndicatorControl1;
+        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton metroButton2;
     }
 }
